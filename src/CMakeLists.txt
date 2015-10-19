@@ -92,7 +92,7 @@ set(LIBCXXABI_TARGETS)
 # Build the shared library.
 if (LIBCXXABI_ENABLE_SHARED)
   add_library(cxxabi_shared SHARED $<TARGET_OBJECTS:cxxabi_objects>)
-  target_link_libraries(cxxabi_shared ${libraries} system)
+  target_link_libraries(cxxabi_shared ${libraries} system_c)
   set_target_properties(cxxabi_shared
     PROPERTIES
       LINK_FLAGS    "${LIBCXXABI_LINK_FLAGS} ${LIBCXXABI_SHARED_LINK_FLAGS}"
