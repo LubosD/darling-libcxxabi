@@ -89,6 +89,10 @@ set_target_properties(cxxabi_objects
 
 set(LIBCXXABI_TARGETS)
 
+SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib${SUFFIX}/darling")
+SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE) 
+SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 # Build the shared library.
 if (LIBCXXABI_ENABLE_SHARED)
   add_library(cxxabi_shared SHARED $<TARGET_OBJECTS:cxxabi_objects>)
@@ -118,10 +122,12 @@ endif()
 # Add a meta-target for both libraries.
 add_custom_target(cxxabi DEPENDS ${LIBCXXABI_TARGETS})
 
-install(TARGETS ${LIBCXXABI_TARGETS}
-  LIBRARY DESTINATION lib${LIBCXXABI_LIBDIR_SUFFIX} COMPONENT libcxxabi
-  ARCHIVE DESTINATION lib${LIBCXXABI_LIBDIR_SUFFIX} COMPONENT libcxxabi
-  )
+#install(TARGETS ${LIBCXXABI_TARGETS}
+#  LIBRARY DESTINATION lib${LIBCXXABI_LIBDIR_SUFFIX} COMPONENT libcxxabi
+#  ARCHIVE DESTINATION lib${LIBCXXABI_LIBDIR_SUFFIX} COMPONENT libcxxabi
+#  )
+
+install(TARGETS cxxabi_shared DESTINATION lib${SUFFIX}/darling)
 
 if (NOT CMAKE_CONFIGURATION_TYPES)
   add_custom_target(install-libcxxabi
