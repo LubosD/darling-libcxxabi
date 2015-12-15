@@ -194,7 +194,7 @@ macro(append_if list condition var)
 endmacro()
 
 set(LIBCXXABI_C_FLAGS "")
-set(LIBCXXABI_CXX_FLAGS "-nostdlib -nostdinc -m${BITS}")
+set(LIBCXXABI_CXX_FLAGS "-nostdlib -nostdinc -nostdinc++ -m${BITS}")
 set(LIBCXXABI_COMPILE_FLAGS "")
 set(LIBCXXABI_LINK_FLAGS "-m${BITS}")
 
