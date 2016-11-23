@@ -54,7 +54,7 @@ set(libraries ${LIBCXXABI_CXX_ABI_LIBRARIES})
 #endif()
 
 # Setup flags.
-append_if(LIBCXXABI_COMPILE_FLAGS LIBCXXABI_HAS_FPIC_FLAG -fPIC)
+append_if(LIBCXXABI_COMPILE_FLAGS LIBCXXABI_HAS_FPIC_FLAG -fPIC )
 append_if(LIBCXXABI_LINK_FLAGS LIBCXXABI_HAS_NODEFAULTLIBS_FLAG -nodefaultlibs)
 
 set(LIBCXXABI_SHARED_LINK_FLAGS -Wl,--version-script=${DARLING_TOP_DIRECTORY}/darwin.map)
@@ -87,7 +87,7 @@ add_library(cxxabi_objects OBJECT ${LIBCXXABI_SOURCES} ${LIBCXXABI_HEADERS})
 
 set_target_properties(cxxabi_objects
   PROPERTIES
-    COMPILE_FLAGS "${LIBCXXABI_COMPILE_FLAGS}"
+    COMPILE_FLAGS "${LIBCXXABI_COMPILE_FLAGS} -Wno-gnu-include-next -Wno-undef -Wno-conversion -Wno-unused-parameter -Wno-sign-conversion"
   )
 
 set(LIBCXXABI_TARGETS)
