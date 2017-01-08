@@ -19,9 +19,9 @@ set(LIBCXXABI_SOURCES
   typeinfo.cpp
 )
 
-if (UNIX AND NOT (APPLE OR CYGWIN))
-  list(APPEND LIBCXXABI_SOURCES cxa_thread_atexit.cpp)
-endif()
+#if (UNIX AND NOT (APPLE OR CYGWIN))
+#  list(APPEND LIBCXXABI_SOURCES cxa_thread_atexit.cpp)
+#endif()
 
 set(LIBCXXABI_HEADERS ../include/cxxabi.h)
 
@@ -57,7 +57,6 @@ set(libraries ${LIBCXXABI_CXX_ABI_LIBRARIES})
 append_if(LIBCXXABI_COMPILE_FLAGS LIBCXXABI_HAS_FPIC_FLAG -fPIC )
 append_if(LIBCXXABI_LINK_FLAGS LIBCXXABI_HAS_NODEFAULTLIBS_FLAG -nodefaultlibs)
 
-set(LIBCXXABI_SHARED_LINK_FLAGS -Wl,--version-script=${DARLING_TOP_DIRECTORY}/darwin.map)
 if (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "i686")
 	set(LIBCXXABI_SHARED_LINK_FLAGS "${LIBCXXABI_SHARED_LINK_FLAGS} -Wl,${CMAKE_CURRENT_SOURCE_DIR}/../i386-aliases")
 endif (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "i686")
@@ -92,17 +91,18 @@ set_target_properties(cxxabi_objects
 
 set(LIBCXXABI_TARGETS)
 
+SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-flat_namespace -Wl,-undefined,suppress")
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/darling")
 SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE) 
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 # Build the shared library.
 if (LIBCXXABI_ENABLE_SHARED)
-  add_library(cxxabi_shared SHARED $<TARGET_OBJECTS:cxxabi_objects>)
-  target_link_libraries(cxxabi_shared ${libraries} system_c unwind)
+  add_darling_library(cxxabi_shared SHARED $<TARGET_OBJECTS:cxxabi_objects>)
+  target_link_libraries(cxxabi_shared ${libraries} system_c system_kernel system_m unwind)
   set_target_properties(cxxabi_shared
     PROPERTIES
-      LINK_FLAGS    "${LIBCXXABI_LINK_FLAGS} ${LIBCXXABI_SHARED_LINK_FLAGS}"
+	#LINK_FLAGS    "${LIBCXXABI_LINK_FLAGS} ${LIBCXXABI_SHARED_LINK_FLAGS}"
       OUTPUT_NAME   "c++abi"
       VERSION       "1.0"
       SOVERSION     "1"
