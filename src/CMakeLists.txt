@@ -98,8 +98,9 @@ SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 # Build the shared library.
 if (LIBCXXABI_ENABLE_SHARED)
+  set(DYLIB_INSTALL_NAME "/usr/lib/libc++abi.dylib")
   add_darling_library(cxxabi_shared SHARED $<TARGET_OBJECTS:cxxabi_objects>)
-  target_link_libraries(cxxabi_shared ${libraries} system_c system_kernel system_m unwind)
+  target_link_libraries(cxxabi_shared PRIVATE ${libraries} system_c system_kernel system_m unwind)
   set_target_properties(cxxabi_shared
     PROPERTIES
 	#LINK_FLAGS    "${LIBCXXABI_LINK_FLAGS} ${LIBCXXABI_SHARED_LINK_FLAGS}"
