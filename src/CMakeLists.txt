@@ -113,6 +113,8 @@ endif()
 
 # Build the static library.
 if (LIBCXXABI_ENABLE_STATIC)
+  set(CMAKE_AR "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ar/x86_64-apple-darwin11-ar")
+  set(CMAKE_RANLIB "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/ranlib")
   add_library(cxxabi_static STATIC $<TARGET_OBJECTS:cxxabi_objects>)
   target_link_libraries(cxxabi_static ${libraries})
   set_target_properties(cxxabi_static
@@ -121,6 +123,7 @@ if (LIBCXXABI_ENABLE_STATIC)
       OUTPUT_NAME   "c++abi"
   )
   list(APPEND LIBCXXABI_TARGETS "cxxabi_static")
+  add_dependencies(cxxabi_static ranlib x86_64-apple-darwin11-ar)
 endif()
 
 # Add a meta-target for both libraries.
