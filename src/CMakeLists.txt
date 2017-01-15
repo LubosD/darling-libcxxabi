@@ -92,9 +92,6 @@ set_target_properties(cxxabi_objects
 set(LIBCXXABI_TARGETS)
 
 SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-flat_namespace -Wl,-undefined,suppress")
-SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/darling")
-SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE) 
-SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 # Build the shared library.
 if (LIBCXXABI_ENABLE_SHARED)
@@ -134,7 +131,7 @@ add_custom_target(cxxabi DEPENDS ${LIBCXXABI_TARGETS})
 #  ARCHIVE DESTINATION lib${LIBCXXABI_LIBDIR_SUFFIX} COMPONENT libcxxabi
 #  )
 
-install(TARGETS cxxabi_shared DESTINATION ${CMAKE_INSTALL_LIBDIR}/darling)
+install(TARGETS cxxabi_shared DESTINATION libexec/darling/usr/lib)
 
 if (NOT CMAKE_CONFIGURATION_TYPES)
   add_custom_target(install-libcxxabi
