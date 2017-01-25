@@ -57,10 +57,6 @@ set(libraries ${LIBCXXABI_CXX_ABI_LIBRARIES})
 append_if(LIBCXXABI_COMPILE_FLAGS LIBCXXABI_HAS_FPIC_FLAG -fPIC )
 append_if(LIBCXXABI_LINK_FLAGS LIBCXXABI_HAS_NODEFAULTLIBS_FLAG -nodefaultlibs)
 
-if (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "i686")
-	set(LIBCXXABI_SHARED_LINK_FLAGS "${LIBCXXABI_SHARED_LINK_FLAGS} -Wl,${CMAKE_CURRENT_SOURCE_DIR}/../i386-aliases")
-endif (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "i686")
-
 if ( APPLE )
   if ( CMAKE_OSX_DEPLOYMENT_TARGET STREQUAL "10.6" )
     list(APPEND LIBCXXABI_COMPILE_FLAGS "-U__STRICT_ANSI__")
@@ -84,10 +80,11 @@ string(REPLACE ";" " " LIBCXXABI_SHARED_LINK_FLAGS "${LIBCXXABI_SHARED_LINK_FLAG
 # Add a object library that contains the compiled source files.
 add_library(cxxabi_objects OBJECT ${LIBCXXABI_SOURCES} ${LIBCXXABI_HEADERS})
 
-set_target_properties(cxxabi_objects
-  PROPERTIES
-    COMPILE_FLAGS "${LIBCXXABI_COMPILE_FLAGS} -Wno-gnu-include-next -Wno-undef -Wno-conversion -Wno-unused-parameter -Wno-sign-conversion"
+set_property(TARGET cxxabi_objects
+	APPEND_STRING PROPERTY
+    COMPILE_FLAGS " ${LIBCXXABI_COMPILE_FLAGS} -Wno-gnu-include-next -Wno-undef -Wno-conversion -Wno-unused-parameter -Wno-sign-conversion"
   )
+make_fat(cxxabi_objects)
 
 set(LIBCXXABI_TARGETS)
 
