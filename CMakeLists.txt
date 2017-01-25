@@ -334,6 +334,10 @@ if (LIBCXXABI_USE_LLVM_UNWINDER OR LLVM_NATIVE_ARCH MATCHES ARM)
   include_directories("${LIBCXXABI_LIBUNWIND_SOURCES}")
 endif ()
 
+include_directories(${CMAKE_SOURCE_DIR}/src/libc/darwin)
+include_directories(${CMAKE_SOURCE_DIR}/src/kernel/libsyscall/wrappers)
+add_definitions(-Wno-nullability-extension)
+
 # Add source code. This also contains all of the logic for deciding linker flags
 # soname, etc...
 add_subdirectory(src)
