@@ -194,9 +194,9 @@ macro(append_if list condition var)
 endmacro()
 
 set(LIBCXXABI_C_FLAGS "")
-set(LIBCXXABI_CXX_FLAGS "-nostdlib -nostdinc -nostdinc++ -m${BITS} -D__DARWIN_UNIX03=1 -D__DARWIN_NON_CANCELABLE=1")
+set(LIBCXXABI_CXX_FLAGS "-nostdlib -nostdinc -nostdinc++ -D__DARWIN_UNIX03=1 -D__DARWIN_NON_CANCELABLE=1")
 set(LIBCXXABI_COMPILE_FLAGS "")
-set(LIBCXXABI_LINK_FLAGS "-m${BITS}")
+set(LIBCXXABI_LINK_FLAGS "")
 
 
 if (LIBCXXABI_HAS_NOSTDINCXX_FLAG)

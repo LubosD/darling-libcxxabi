@@ -88,6 +88,7 @@ set_target_properties(cxxabi_objects
   PROPERTIES
     COMPILE_FLAGS "${LIBCXXABI_COMPILE_FLAGS} -Wno-gnu-include-next -Wno-undef -Wno-conversion -Wno-unused-parameter -Wno-sign-conversion"
   )
+make_fat(cxxabi_objects)
 
 set(LIBCXXABI_TARGETS)
 
@@ -98,6 +99,7 @@ if (LIBCXXABI_ENABLE_SHARED)
   set(DYLIB_INSTALL_NAME "/usr/lib/libc++abi.dylib")
   add_darling_library(cxxabi_shared SHARED $<TARGET_OBJECTS:cxxabi_objects>)
   target_link_libraries(cxxabi_shared PRIVATE ${libraries} system_c system_kernel system_m unwind)
+  make_fat(cxxabi_shared)
   set_target_properties(cxxabi_shared
     PROPERTIES
 	#LINK_FLAGS    "${LIBCXXABI_LINK_FLAGS} ${LIBCXXABI_SHARED_LINK_FLAGS}"
@@ -113,6 +115,7 @@ if (LIBCXXABI_ENABLE_STATIC)
   set(CMAKE_AR "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ar/x86_64-apple-darwin11-ar")
   set(CMAKE_RANLIB "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/ranlib")
   add_library(cxxabi_static STATIC $<TARGET_OBJECTS:cxxabi_objects>)
+  make_fat(cxxabi_static)
   target_link_libraries(cxxabi_static ${libraries})
   set_target_properties(cxxabi_static
     PROPERTIES
