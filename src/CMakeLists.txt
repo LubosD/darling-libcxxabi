@@ -82,7 +82,7 @@ string(REPLACE ";" " " LIBCXXABI_LINK_FLAGS "${LIBCXXABI_LINK_FLAGS}")
 string(REPLACE ";" " " LIBCXXABI_SHARED_LINK_FLAGS "${LIBCXXABI_SHARED_LINK_FLAGS}")
 
 # Add a object library that contains the compiled source files.
-add_library(cxxabi_objects OBJECT ${LIBCXXABI_SOURCES} ${LIBCXXABI_HEADERS})
+add_darling_object_library(cxxabi_objects ${LIBCXXABI_SOURCES} ${LIBCXXABI_HEADERS})
 
 set_target_properties(cxxabi_objects
   PROPERTIES

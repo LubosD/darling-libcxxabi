@@ -37,7 +37,7 @@ set(cxxabi_sources
 	src/typeinfo.cpp
 )
 
-add_library(cxxabi_obj OBJECT ${cxxabi_sources})
+add_darling_object_library(cxxabi_obj ${cxxabi_sources})
 make_fat(cxxabi_obj)
 
 set(DYLIB_INSTALL_NAME "/usr/lib/libc++abi.dylib")
