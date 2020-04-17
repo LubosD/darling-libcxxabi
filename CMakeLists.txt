@@ -1,6 +1,6 @@
 project(libcxxabi)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -nostdinc -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -nostdinc -std=c++11 -mmacosx-version-min=10.10")
 set(CMAKE_SHARED_LINKER_FLAGS "-nostdlib")
 
 include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR}/../libcxx/include)
@@ -14,7 +14,7 @@ include_directories(
 	${CMAKE_SOURCE_DIR}/src/libunwind/include
 )
 
-add_definitions(-D__DARWIN_NON_CANCELABLE=1)
+add_definitions(-D__DARWIN_NON_CANCELABLE=1 -D_LIBCPP_HAS_NO_LIBRARY_ALIGNED_ALLOCATION=1)
 
 set(cxxabi_sources
 	src/abort_message.cpp
@@ -25,16 +25,18 @@ set(cxxabi_sources
 	src/cxa_exception_storage.cpp
 	src/cxa_guard.cpp
 	src/cxa_handlers.cpp
-	src/cxa_new_delete.cpp
+	src/cxa_noexception.cpp
 	src/cxa_personality.cpp
 	src/cxa_thread_atexit.cpp
 	src/cxa_unexpected.cpp
 	src/cxa_vector.cpp
 	src/cxa_virtual.cpp
-	src/exception.cpp
+	src/fallback_malloc.cpp
 	src/private_typeinfo.cpp
-	src/stdexcept.cpp
-	src/typeinfo.cpp
+	src/stdlib_exception.cpp
+	src/stdlib_new_delete.cpp
+	src/stdlib_stdexcept.cpp
+	src/stdlib_typeinfo.cpp
 )
 
 add_darling_object_library(cxxabi_obj ${cxxabi_sources})
