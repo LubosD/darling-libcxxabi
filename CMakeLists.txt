@@ -25,7 +25,7 @@ set(cxxabi_sources
 	src/cxa_exception_storage.cpp
 	src/cxa_guard.cpp
 	src/cxa_handlers.cpp
-	src/cxa_noexception.cpp
+	#src/cxa_noexception.cpp
 	src/cxa_personality.cpp
 	src/cxa_thread_atexit.cpp
 	src/cxa_unexpected.cpp
@@ -46,15 +46,13 @@ set(DYLIB_INSTALL_NAME "/usr/lib/libc++abi.dylib")
 set(DYLIB_COMPAT_VERSION "1.0.0")
 set(DYLIB_CURRENT_VERSION "1.0.0")
 
-set(CMAKE_AR "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ar/x86_64-apple-darwin11-ar")
-set(CMAKE_RANLIB "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/ranlib")
-add_library(cxxabi_static STATIC $<TARGET_OBJECTS:cxxabi_obj>)
+add_darling_static_library(cxxabi_static SOURCES $<TARGET_OBJECTS:cxxabi_obj>)
 make_fat(cxxabi_static)
-add_dependencies(cxxabi_static ranlib x86_64-apple-darwin11-ar)
 
 add_darling_library(cxxabi SHARED $<TARGET_OBJECTS:cxxabi_obj>)
 target_link_libraries(cxxabi system)
 set_target_properties(cxxabi PROPERTIES OUTPUT_NAME "c++abi")
+#set_property(TARGET cxxabi APPEND_STRING PROPERTY LINK_FLAGS " -Wl,-undefined,dynamic_lookup") # Needed for weakly imported symbols
 make_fat(cxxabi)
 
 install(TARGETS cxxabi DESTINATION libexec/darling/usr/lib)
