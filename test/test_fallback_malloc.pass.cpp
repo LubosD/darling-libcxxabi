@@ -1,22 +1,21 @@
 //===--------------------- test_fallback_malloc.cpp -----------------------===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is dual licensed under the MIT and the University of Illinois Open
-// Source Licenses. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 
 #include <iostream>
 #include <deque>
 
-#include <pthread.h>
+#include <__threading_support>
 
 typedef std::deque<void *> container;
 
 // #define  DEBUG_FALLBACK_MALLOC
 #define INSTRUMENT_FALLBACK_MALLOC
-#include "../src/fallback_malloc.ipp"
+#include "../src/fallback_malloc.cpp"
 
 container alloc_series ( size_t sz ) {
     container ptrs;
@@ -165,7 +164,7 @@ void exhaustion_test3 () {
     }
 
     
-int main ( int argc, char *argv [] ) {
+int main () {
     print_free_list ();
 
     char *p = (char *) fallback_malloc ( 1024 );    // too big!

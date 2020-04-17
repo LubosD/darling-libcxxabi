@@ -1,11 +1,12 @@
 //===----------------- catch_member_pointer_nullptr.cpp -------------------===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is dual licensed under the MIT and the University of Illinois Open
-// Source Licenses. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
+
+// UNSUPPORTED: libcxxabi-no-exceptions
 
 #include <cassert>
 
@@ -27,8 +28,9 @@ void test1()
         throw nullptr;
         assert(false);
     }
-    catch (md2)
+    catch (md2 p)
     {
+        assert(!p);
     }
     catch (md1)
     {
@@ -43,8 +45,9 @@ void test2()
         throw nullptr;
         assert(false);
     }
-    catch (md1)
+    catch (md1 p)
     {
+        assert(!p);
     }
     catch (md2)
     {

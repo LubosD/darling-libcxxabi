@@ -1,9 +1,8 @@
 //===---------------------- catch_class_03.cpp ----------------------------===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is dual licensed under the MIT and the University of Illinois Open
-// Source Licenses. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 
@@ -13,9 +12,18 @@
     check against.
 */
 
+// UNSUPPORTED: libcxxabi-no-exceptions
+
 #include <exception>
 #include <stdlib.h>
 #include <assert.h>
+
+// Clang emits  warnings about exceptions of type 'Child' being caught by
+// an earlier handler of type 'Base'. Congrats clang, you've just
+// diagnosed the behavior under test.
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wexceptions"
+#endif
 
 struct B
 {

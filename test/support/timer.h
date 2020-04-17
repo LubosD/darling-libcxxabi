@@ -1,5 +1,13 @@
-#ifndef TIMER_HPP
-#define TIMER_HPP
+//===----------------------------------------------------------------------===////
+//
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+//
+//===----------------------------------------------------------------------===////
+
+#ifndef TIMER_H
+#define TIMER_H
 
 // Define LIBCXXABI_NO_TIMER to disable testing with a timer.
 #ifndef LIBCXXABI_NO_TIMER
@@ -43,4 +51,4 @@ public:
 
 #endif /* LIBCXXABI_NO_TIMER */
 
-#endif /* TIMER_HPP */
+#endif /* TIMER_H */

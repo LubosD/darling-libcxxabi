@@ -1,9 +1,8 @@
 //===------------------------- abort_message.cpp --------------------------===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is dual licensed under the MIT and the University of Illinois Open
-// Source Licenses. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 
@@ -22,8 +21,6 @@ extern "C" void android_set_abort_message(const char* msg);
 #endif // __ANDROID_API__ >= 21
 #endif // __BIONIC__
 
-#pragma GCC visibility push(hidden)
-
 #ifdef __APPLE__
 #   if defined(__has_include) && __has_include(<CrashReporterClient.h>)
 #       define HAVE_CRASHREPORTERCLIENT_H
@@ -31,10 +28,10 @@ extern "C" void android_set_abort_message(const char* msg);
 #   endif
 #endif
 
-__attribute__((visibility("hidden"), noreturn))
 void abort_message(const char* format, ...)
 {
     // write message to stderr
+#if !defined(NDEBUG) || !defined(LIBCXXABI_BAREMETAL)
 #ifdef __APPLE__
     fprintf(stderr, "libc++abi.dylib: ");
 #endif
@@ -43,6 +40,7 @@ void abort_message(const char* format, ...)
     vfprintf(stderr, format, list);
     va_end(list);
     fprintf(stderr, "\n");
+#endif
 
 #if defined(__APPLE__) && defined(HAVE_CRASHREPORTERCLIENT_H)
     // record message in crash report
@@ -77,5 +75,3 @@ void abort_message(const char* format, ...)
 
     abort();
 }
-
-#pragma GCC visibility pop
