@@ -4,15 +4,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -nostdinc -std=c++11 -mmacosx-version-mi
 set(CMAKE_SHARED_LINKER_FLAGS "-nostdlib")
 
 include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR}/../libcxx/include)
-include_directories(
-	${CMAKE_SOURCE_DIR}/src/libc/locale
-	${CMAKE_SOURCE_DIR}/src/libc/locale/FreeBSD
-	${CMAKE_SOURCE_DIR}/src/libc/stdtime/FreeBSD
-	${CMAKE_SOURCE_DIR}/src/libc/pthreads
-	${CMAKE_SOURCE_DIR}/src/libc/include/FreeBSD
-	${CMAKE_SOURCE_DIR}/src/external/libcxxabi/include
-	${CMAKE_SOURCE_DIR}/src/libunwind/include
-)
 
 add_definitions(-D__DARWIN_NON_CANCELABLE=1 -D_LIBCPP_HAS_NO_LIBRARY_ALIGNED_ALLOCATION=1)
 
