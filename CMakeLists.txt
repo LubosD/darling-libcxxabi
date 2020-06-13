@@ -1,6 +1,6 @@
 project(libcxxabi)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -nostdinc -std=c++11 -mmacosx-version-min=10.10")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -nostdinc -std=c++11")
 set(CMAKE_SHARED_LINKER_FLAGS "-nostdlib")
 
 include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR}/../libcxx/include)
