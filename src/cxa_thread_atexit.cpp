@@ -10,7 +10,7 @@
 #include "cxxabi.h"
 #include <__threading_support>
 #ifndef _LIBCXXABI_HAS_NO_THREADS
-#if defined(__unix__) && !defined(__ANDROID__) && defined(__ELF__) && defined(_LIBCXXABI_HAS_COMMENT_LIB_PRAGMA)
+#if defined(__ELF__) && defined(_LIBCXXABI_LINK_PTHREAD_LIB)
 #pragma comment(lib, "pthread")
 #endif
 #endif
@@ -22,16 +22,12 @@ namespace __cxxabiv1 {
   using Dtor = void(*)(void*);
 
   extern "C"
-#ifndef __APPLE__
 #ifndef HAVE___CXA_THREAD_ATEXIT_IMPL
   // A weak symbol is used to detect this function's presence in the C library
   // at runtime, even if libc++ is built against an older libc
   _LIBCXXABI_WEAK
 #endif
   int __cxa_thread_atexit_impl(Dtor, void*, void*);
-#else
-  int (*__cxa_thread_atexit_impl)(Dtor, void*, void*) = nullptr;
-#endif
 
 #ifndef HAVE___CXA_THREAD_ATEXIT_IMPL
 
