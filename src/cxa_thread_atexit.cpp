@@ -22,12 +22,16 @@ namespace __cxxabiv1 {
   using Dtor = void(*)(void*);
 
   extern "C"
+#ifdef DARLING
+  int (*__cxa_thread_atexit_impl)(Dtor, void*, void*) = nullptr;
+#else // !DARLING
 #ifndef HAVE___CXA_THREAD_ATEXIT_IMPL
   // A weak symbol is used to detect this function's presence in the C library
   // at runtime, even if libc++ is built against an older libc
   _LIBCXXABI_WEAK
 #endif
   int __cxa_thread_atexit_impl(Dtor, void*, void*);
+#endif // DARLING
 
 #ifndef HAVE___CXA_THREAD_ATEXIT_IMPL
 

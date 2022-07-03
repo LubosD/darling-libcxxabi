@@ -3,7 +3,10 @@ project(libcxxabi)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -nostdinc -std=c++11")
 set(CMAKE_SHARED_LINKER_FLAGS "-nostdlib")
 
-include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR}/../libcxx/include)
+include_directories(BEFORE
+	${CMAKE_CURRENT_SOURCE_DIR}/../libcxx/include
+	${CMAKE_CURRENT_SOURCE_DIR}/../libcxx
+)
 
 add_definitions(-D__DARWIN_NON_CANCELABLE=1 -D_LIBCPP_HAS_NO_LIBRARY_ALIGNED_ALLOCATION=1)
 
@@ -19,7 +22,6 @@ set(cxxabi_sources
 	#src/cxa_noexception.cpp
 	src/cxa_personality.cpp
 	src/cxa_thread_atexit.cpp
-	src/cxa_unexpected.cpp
 	src/cxa_vector.cpp
 	src/cxa_virtual.cpp
 	src/fallback_malloc.cpp
